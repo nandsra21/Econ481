@@ -15,11 +15,11 @@ def simulate_data(seed: int = 481) -> tuple:
     y_i = 5 + 3x_{i1} + 2x_{i2} + 6x_{i3} + \varepsilon_i
     takes one argument, seed, an integer that is used to set a seed (this should default to 481 if not provided), and should return a tuple of two elements, (y,X) where y is a np.array and X is a np.array.
     """
-    np.random.seed(seed)
+    rng = np.random.default_rng(seed=seed)
+    
+    X = rng.normal(loc=0, scale=np.sqrt(2), size=(1000, 3))
 
-    X = np.random.standard_normal(size=(1000, 3))
-
-    epsilon = np.random.standard_normal(size=(1000, 1))
+    epsilon = rng.standard_normal(size=(1000, 1))
 
     y = 5 + 3 * X[:, 0] + 2 * X[:, 1] + 6 * X[:, 2] + epsilon.flatten()
     
@@ -39,13 +39,14 @@ def negative_log_likelihood(params, y, X):
     
 def estimate_mle(y: np.array, X: np.array) -> np.array:
     """
-    Some docstring
+    estimate betas using MLE
     """
     initial_guess = np.zeros(4)
     result = minimize(negative_log_likelihood, initial_guess, args=(y.flatten(), X))
     return result.x
 
 estimate_mle(y, X)
+
 # Exercise 3
 def loss_function(params, X, y):
     beta_0, beta_1, beta_2, beta_3 = params
@@ -55,7 +56,7 @@ def loss_function(params, X, y):
     
 def estimate_ols(y: np.array, X: np.array) -> np.array:
     """
-    some docstring
+    estimate betas using OLS
     """
     initial_guess = np.zeros(4)
     result = minimize(loss_function, initial_guess, args=(X, y.flatten()))
