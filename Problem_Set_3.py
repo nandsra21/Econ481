@@ -16,7 +16,7 @@ def import_yearly_data(years: list) -> pd.DataFrame:
     df_list = []
     
     for year in years:
-        temp = pd.read_excel(f"ghgp_data_{year}.xlsx", sheet_name="Direct Emitters", header=3, index_col=None)
+        temp = pd.read_excel(f"https://lukashager.netlify.app/econ-481/data/ghgp_data_{year}.xlsx", sheet_name="Direct Emitters", header=3, index_col=None)
         temp['year'] = year
         df_list.append(temp)
 
@@ -34,7 +34,7 @@ def import_parent_companies(years: list) -> pd.DataFrame:
     """
     df_list = []
     for year in years:
-        temp = pd.read_excel("ghgp_data_parent_company_09_2023.xlsb", sheet_name=f"{year}", header=0, index_col=None, engine='pyxlsb')
+        temp = pd.read_excel("https://lukashager.netlify.app/econ-481/data/ghgp_data_parent_company_09_2023.xlsb", sheet_name=f"{year}", header=0, index_col=None, engine='pyxlsb')
         
         temp['year'] = year
         df_list.append(temp)
