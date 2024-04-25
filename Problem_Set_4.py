@@ -40,7 +40,6 @@ def plot_close(df: pd.DataFrame, start: str = '2010-06-29', end: str = '2024-04-
     
     plt.grid(True)
     plt.tight_layout()
-    plt.show()
 
 plot_close(TSLA_df)
 
@@ -103,6 +102,5 @@ def plot_delta(df: pd.DataFrame) -> None:
     plt.xlabel('Date')
     plt.ylabel('Delta_x')
     plt.grid(True)
-    plt.show()
 
 plot_delta(TSLA_df)
