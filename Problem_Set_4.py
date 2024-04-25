@@ -50,22 +50,20 @@ def autoregress(df: pd.DataFrame) -> float:
     Some docstrings.
     """
     val_df = df.copy()
-    val_df['delta_x'] = val_df['Close'].diff(periods=1)
-    val_df['lagged_delta_x'] = val_df['delta_x'].shift(freq=pd.Timedelta(days=1))
-    val_df.dropna(subset=['delta_x', 'lagged_delta_x'], inplace=True)
+    val_df['delta_x'] = val_df['Close'].diff()
 
-    X = val_df['lagged_delta_x']
-    y = val_df['delta_x']
-    model = sm.OLS(y, X)
-    results = model.fit(cov_type='HC1')
-    t_stat_beta_0 = results.tvalues['lagged_delta_x']
+    val_df['lagged_delta_x'] = val_df['delta_x'].shift(-1)
+    x = val_df['delta_x']
+    y = val_df['lagged_delta_x']
 
-    return t_stat_beta_0
+    model = sm.OLS(y, x, missing="drop").fit(cov_type='HC1')
+
+    t_statistic = model.tvalues["delta_x"]
+
+    return t_statistic
 
 autoregress(TSLA_df)
 
-import pandas as pd
-import numpy as np
 import statsmodels.api as sm
 
 def autoregress_logit(df: pd.DataFrame) -> float:
