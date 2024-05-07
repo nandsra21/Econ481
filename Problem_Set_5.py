@@ -9,6 +9,9 @@ import requests
 from bs4 import BeautifulSoup
 
 def scrape_code(lecture_url):
+    """
+    Code scraper
+    """
     response = requests.get(lecture_url, headers={'Accept-Encoding': 'utf-8'})
     
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -24,6 +27,7 @@ def scrape_code(lecture_url):
     formatted_code = '\n'.join(code_lines)
 
     return formatted_code
+
 
 lecture_url = "https://lukashager.netlify.app/econ-481/01_intro_to_python"
 code = scrape_code(lecture_url)
